@@ -1,0 +1,23 @@
+/* محتوى style.css */
+QMenu {
+    background-color: #2e2e2e;  /* خلفية القائمة */
+    color: #ffffff;  /* لون النص */
+    border: 2px solid #ffffff;  /* حواف بيضاء */
+    padding: 10px;  /* زيادة المسافة الداخلية */
+    }
+    
+    QMenu::item {
+    background-color: transparent;
+    padding: 10px;  /* زيادة المسافة الداخلية للعناصر */
+    }
+                              
+    QMenu::item:selected { /* العناصر المختارة */
+    background-color: #505050;
+    border: 1px solid #ffffff;  /* حواف بيضاء للعناصر المختارة */
+    }
+                              
+    QMenu::separator {
+    height: 2px;  /* إرتفاع الفاصل */
+    background-color: #ffffff;  /* لون الفاصل */
+    width: 200;
+    }
