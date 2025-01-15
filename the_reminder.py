@@ -1,10 +1,11 @@
 from customtkinter import *
-import keyboard,mouse, json as j,os,sys,win32.win32gui as win32gui,win32.lib.win32con as win32con,ctypes,psutil
+import mouse, json as j,os,sys,ctypes,psutil
+from pynput import keyboard
 
 the_pid = os.getpid()
 
 p = psutil.Process(the_pid)
-p.nice(psutil.REALTIME_PRIORITY_CLASS)  # أو استخدم psutil.REALTIME_PRIORITY_CLASS لزيادة الأولوية إلى الحد الأقصى
+p.nice(0)  # أو استخدم psutil.REALTIME_PRIORITY_CLASS لزيادة الأولوية إلى الحد الأقصى
 
 #location = os.path.dirname(sys.executable)  # عند تشغيل البرنامج كملف .py
 location = os.path.dirname(__file__)  # عند تشغيل البرنامج كملف .exe
@@ -96,17 +97,27 @@ def disable_always_on_top():
                               win32con.SWP_NOMOVE | win32con.SWP_NOSIZE | win32con.SWP_NOACTIVATE)
     root.after(1,disable_always_on_top)
 
-keyboard.block_key("f4")
-keyboard.block_key("tab")
-keyboard.block_key("t")
-keyboard.add_hotkey("ctrl+a+j",qu)
+def on_press(key):
+    # قائمة المفاتيح المحظورة
+    blocked_keys = ["f4", "tab","ctrl"]
+
+    try:
+        # استخدام key.name للحصول على اسم المفتاح
+        if key.name in blocked_keys:
+            print(f"{key.name} تم الضغط عليه، ولكن تم حظره.")
+            return False  # تجاهل المفتاح المحظور
+    except AttributeError:
+        pass
+
+listener = keyboard.Listener(on_press=on_press)
 
 go_ya_mouse()
-make_window_always_on_top()
-keep_window_on_top()
-disable_always_on_top()
-
+#make_window_always_on_top()
+#keep_window_on_top()
+#disable_always_on_top()
+root.after(100,lambda:listener.start())
 root.after(900000,qu)
+
 
 go_pray = CTkLabel(master=root, text="Go Pray", font=("Cairo", 30))
 go_pray.pack(anchor="center")

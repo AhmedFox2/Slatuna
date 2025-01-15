@@ -25,10 +25,10 @@ def main():
     app.setStyleSheet(load_stylesheet(css_file_path))
 
     # التأكد من وجود الأيقونة في المسار الصحيح
-    icon_path = f"{loc}/assets/Imgs/icon.ico"  # يمكنك تغيير المسار هنا إذا كان ملف الأيقونة في مسار مختلف
+    icon_path = f"{loc}/assets/Imgs/icon2.png"  # يمكنك تغيير المسار هنا إذا كان ملف الأيقونة في مسار مختلف
 
     # إنشاء أيقونة شريط النظام
-    trayIcon = QSystemTrayIcon(QIcon(icon_path), parent=app)
+    trayIcon = QSystemTrayIcon(icon=QIcon(icon_path), parent=app)
 
     # إنشاء قائمة السياق الخاصة بالأيقونة
     trayMenu = QMenu()
@@ -62,3 +62,6 @@ def main():
 
     # تشغيل التطبيق
     app.exec_()
+
+if __name__ == "__main__":
+    main()

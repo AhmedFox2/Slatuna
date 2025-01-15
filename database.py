@@ -34,6 +34,7 @@ def save_json_file(data):
 # تحميل أوقات الصلاة
 def fetch_prayer_times(city, year, month):
     url = f'https://timesprayer.com/en/list-prayer-in-{city}-{year}-{month}.html'
+    print(url)
     response = rq.get(url)
     soup = bs(response.content, "html.parser")
     times_table = soup.find(class_="prayertimerange").find_all('td')
@@ -78,7 +79,7 @@ def validate_date(json_data, current_date):
         save_json_file(json_data)
     else:
         None
-
+ 
 #تحويل الاوقات من 12 ساعه الي 24 ساعه
 def convert_the_time_to_24h():
     fileopend = load_json_file()
@@ -122,8 +123,10 @@ def duplicat():
 
             the_frist_one = fileopend["sys"]["times"][i]["all_times"]
             fileopend["sys"]["times"][i]["all_times_2"] = the_frist_one
-            fileopend["sys"]["ready"] = "yes"
             save_json_file(fileopend)
+        
+        fileopend["sys"]["ready"] = "yes"
+        save_json_file(fileopend)
     else:
         None
 
@@ -167,12 +170,12 @@ def main():
 
     if current_year != json_year or not json_data["sys"]["times"]:
         print("Year mismatch found or no times available. Fetching new prayer times.")
-        response = urlopen('http://ipinfo.io/json')
+        response = urlopen('http://ip-api.com/json')
         data = j.load(response)
-        city = data["city"]
+        city = data["regionName"]
         print(f"Detected city: {city}")
 
-        version = bs(rq.get("https://ahmedfox2.github.io/Slatuna.github.io/").content, "html.parser").find("h1").text
+        version = bs(rq.get("https://ahmedfox2.github.io/Slatuna_website/").content, "html.parser").find("h1").text
         print(f"Detected version: {version}")
 
         json_data["sys"].update({
@@ -183,7 +186,7 @@ def main():
 
         for month in range(current_month, 13):
             print(f"Fetching prayer times for month: {month}")
-            times_table = fetch_prayer_times(city, current_year, month)
+            times_table = fetch_prayer_times(city.lower().replace(" ","-"), current_year, month)
             date_list, times_list, times_during_list = process_prayer_times(times_table)
             update_json_with_prayer_times(json_data, date_list, times_list, times_during_list)
     validate_date(json_data, current_date)

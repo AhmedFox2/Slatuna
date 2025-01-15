@@ -1,6 +1,6 @@
+import PIL.Image
 from customtkinter import *
-from tkinter import *
-import os, json, datetime as dt, webbrowser
+import os, json, datetime as dt, webbrowser,PIL.Image
 
 # Change directory to the script's location
 location = os.path.dirname(__file__)
@@ -18,7 +18,7 @@ def Json_file():
             ha = {
                     "app": {
                         "apper": "system",
-                        "language": "en"
+                        "language": "ar"
                     }
                 }
             he = '"' 
@@ -106,11 +106,13 @@ def main():
     # Initialize the main window
     root = CTk()
     root.title(translate("title"))
+    icon = PIL.Image.open(f"{location}/assets/Imgs/icon2.png")
+    root.wm(False,CTk(light_image=icon,dark_image=icon))
 
     # Set the window size and position
     screen_w = root.winfo_screenwidth()
     screen_h = root.winfo_screenheight()
-    app_w = 290
+    app_w = 330
     app_h = 330
     x = (screen_w / 2) - (app_w / 2)
     y = (screen_h / 2) - (app_h / 2)

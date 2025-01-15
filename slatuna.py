@@ -1,12 +1,11 @@
 import datetime as dt, time as t, json as j, os, psutil,sys,threading
-from PIL import Image
 from pygame import mixer
 from database import main as database
 from stray import main as tray_icon
 
 #  https://www.mediafire.com/file/3kidit35e811cj0/Slatuna.zip/file
-p = psutil.Process(os.getpid())
-p.nice(psutil.HIGH_PRIORITY_CLASS)  # أو استخدم psutil.REALTIME_PRIORITY_CLASS لزيادة الأولوية إلى الحد الأقصى
+#p = psutil.Process(os.getpid())
+#p.nice(psutil.HIGH_PRIORITY_CLASS)  # أو استخدم psutil.REALTIME_PRIORITY_CLASS لزيادة الأولوية إلى الحد الأقصى
 
 loc = os.path.dirname(__file__)
 os.chdir(loc)
